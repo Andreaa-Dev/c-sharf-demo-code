@@ -86,6 +86,10 @@ builder.Services.AddAuthorization(
 // add controllers
 builder.Services.AddControllers();
 
+// swagger
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
+
 // after database
 var app = builder.Build();
 
@@ -122,5 +126,11 @@ app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
 
+
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 app.Run();
 

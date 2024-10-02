@@ -69,6 +69,7 @@ git clone https://github.com/your-username/e-commerce-backend.git
 - Run migrations to create the database:
 
 ```bash
+dotnet ef migrations add InitialCreate
 dotnet ef database update
 ```
 
@@ -78,48 +79,49 @@ dotnet ef database update
 dotnet watch
 ```
 
-The API will be available at `https://localhost:5000`.
+The API will be available at `https://localhost:5000`
 
 ### 4. Swagger:
 
-- Navigate to `https://localhost:5001/swagger` to explore the API endpoints.
+- Navigate to `http://localhost:5291/swagger/index.html` to explore the API endpoints.
 
 ## Project Structure
 
-\`\`\`bash
+```bash
 |-- ECommerce
 |-- Controllers # API Controllers
-|-- Data # DbContext and Database Configurations
-|-- Entities # Database Entities (User, Product, Category, Order)
+|-- Database # DbContext and Database Configurations
 |-- DTOs # Data Transfer Objects
+|-- Entities # Database Entities (User, Product, Category, Order)
+|-- Middleware # Logging request, response and Error Handler
 |-- Repositories # Repository Layer for database operations
 |-- Services # Business Logic Layer
+|-- Utils # Common logics
 |-- Migrations # Entity Framework Migrations
 |-- Program.cs # Application Entry Point
-|-- Startup.cs # Configuration and Middleware setup
-\`\`\`
+```
 
 ## API Endpoints
 
 ### User
 
-- **POST** \`/api/users/register\` – Register a new user.
-- **POST** \`/api/users/login\` – Login and get JWT token.
+- **POST** `/api/users/register` – Register a new user.
+- **POST** `/api/users/login` – Login and get JWT token.
 
 ### Product
 
-- **GET** \`/api/products\` – Get all products (Paginated).
-- **POST** \`/api/products\` – Create a new product (Admin only).
+- **GET** `/api/products` – Get all products (Paginated).
+- **POST** `/api/products` – Create a new product (Admin only).
 
 ### Category
 
-- **GET** \`/api/categories\` – Get all categories.
-- **POST** \`/api/categories\` – Create a new category (Admin only).
+- **GET** `/api/categories` – Get all categories.
+- **POST** `/api/categories` – Create a new category (Admin only).
 
 ### Order
 
-- **POST** \`/api/orders\` – Create a new order.
-- **GET** \`/api/orders\` – Get all orders (Admin only).
+- **POST** `/api/orders` – Create a new order.
+- **GET** `/api/orders/users/userId` – Get order buy user id.
 
 ## Deployment
 
