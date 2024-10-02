@@ -1,71 +1,143 @@
-### Database
+# E-Commerce Backend Project
 
-1. Step 1: add package
+## Project Overview
 
-- intro Nuget
-- link: https://www.nuget.org/
+This is a backend solution for an e-commerce platform built with .NET 6. The project includes core functionalities such as user authentication, product management, category management, and order processing.
 
-- dotnet add package Microsoft.EntityFrameworkCore.Design
-- dotnet add package Npgsql.EntityFrameworkCore.PostgreSQL
+## Features
 
-- check csproj file
+- **User Management**:
+  - Register new users (customers and admins).
+  - User authentication with JWT tokens.
+  - Role-based access control (Admin, Customer).
+- **Product Management**:
 
-2. Step 2: Database file
+  - Admin can create, update, and delete products.
+  - Customers can view products.
+  - Products are organized by categories.
 
-- DatabaseContext
+- **Category Management**:
 
-3. Step 3: Program.cs
+  - Admin can create, update, and delete categories.
+  - Categories are used to organize products.
 
-- postgreslocal - property
-- get connection string value
+- **Order Management**:
 
-- appsetting.json
+  - Customers can create orders based on products in their cart.
+  - Admin can view all orders.
 
-"ConnectionStrings": {
-"Local": "Host=localhost;Database=demotest;Username=postgres;Password=andreaSDA"
-},
+- **Authentication & Authorization**:
+  - JWT-based authentication.
+  - Role-based authorization (Customer, Admin).
 
-- gitignore
+## Technologies Used
 
-4. Repository
+- **.NET 6**: Web API framework.
+- **Entity Framework Core**: ORM for database interactions.
+- **SQL Server**: Relational database for storing data.
+- **JWT**: For user authentication and authorization.
+- **AutoMapper**: For object mapping.
+- **Swagger**: API documentation.
 
-- to talk to database
+## Prerequisites
 
-5. Category
+- .NET 6 SDK
+- SQL Server
+- Visual Studio or any other C# IDE
 
-6. Repo
+## Getting Started
 
-- create category entity
+### 1. Clone the repository:
 
-7. DTO: create category
+```bash
+git clone https://github.com/your-username/e-commerce-backend.git
+```
 
-8. Mapper
-   dotnet add package AutoMapper
+### 2. Setup database:
 
-   create Mapper profile
+- Make sure SQL Server is running.
+- Update the connection string in `appsettings.json` with your SQL Server credentials.
 
-9. Services
+```json
+{
+  "ConnectionStrings": {
+    "DefaultConnection": "Server=localhost;Database=ECommerceDb;User Id=your_username;Password=your_password;"
+  }
+}
+```
 
-10. Migration
-    When: update or change the structure of your database to reflect changes made to your entity models in code
+- Run migrations to create the database:
 
-- **Initial Database Creation** (dotnet ef migrations add InitialCreate)
-- Modifying Entity Models
-- Schema Evolvement: add new table
-- Fixing Issues or Optimizing the Database: add constraint
+```bash
+dotnet ef database update
+```
 
-- dotnet tool install --global dotnet-ef
+### 3. Run the application:
 
-### Note
+```bash
+dotnet watch
+```
 
-1.  Common
+The API will be available at `https://localhost:5000`.
 
-- Add database context (e.g., AddDbContext)
-- Add repositories, services, and other application services
-- Add controllers (e.g., AddControllers)
+### 4. Swagger:
 
-Asynchronous operations are generally more scalable, allowing the server to handle more requests concurrently without getting blocked by long-running tasks.
+- Navigate to `https://localhost:5001/swagger` to explore the API endpoints.
 
-### Link
+## Project Structure
 
-- http://localhost:5000/api/v1/categorys?offset=0&limit=10&search=c
+\`\`\`bash
+|-- ECommerce
+|-- Controllers # API Controllers
+|-- Data # DbContext and Database Configurations
+|-- Entities # Database Entities (User, Product, Category, Order)
+|-- DTOs # Data Transfer Objects
+|-- Repositories # Repository Layer for database operations
+|-- Services # Business Logic Layer
+|-- Migrations # Entity Framework Migrations
+|-- Program.cs # Application Entry Point
+|-- Startup.cs # Configuration and Middleware setup
+\`\`\`
+
+## API Endpoints
+
+### User
+
+- **POST** \`/api/users/register\` – Register a new user.
+- **POST** \`/api/users/login\` – Login and get JWT token.
+
+### Product
+
+- **GET** \`/api/products\` – Get all products (Paginated).
+- **POST** \`/api/products\` – Create a new product (Admin only).
+
+### Category
+
+- **GET** \`/api/categories\` – Get all categories.
+- **POST** \`/api/categories\` – Create a new category (Admin only).
+
+### Order
+
+- **POST** \`/api/orders\` – Create a new order.
+- **GET** \`/api/orders\` – Get all orders (Admin only).
+
+## Deployment
+
+- The application is deployed and can be accessed at: [https://your-deploy-link.com](https://your-deploy-link.com)
+
+## Team Members
+
+- **Team Lead**: Your Name (@githubusername)
+- **Backend Developer**: Member 1 (@githubusername)
+- **Backend Developer**: Member 2 (@githubusername)
+- **Database Administrator**: Member 3 (@githubusername)
+
+## Contributing
+
+- Fork the repository.
+- Create a new branch for your feature.
+- Submit a pull request with a clear description of the changes.
+
+## License
+
+This project is licensed under the MIT License.
