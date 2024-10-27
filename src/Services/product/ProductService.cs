@@ -7,6 +7,7 @@ using user.src.Entity;
 using user.src.Repository;
 using user.src.Utils;
 using static user.src.DTO.ProductDTO;
+using user.src.Utils;
 
 namespace user.src.Services.product
 {
@@ -38,10 +39,15 @@ namespace user.src.Services.product
             return false;
         }
 
-        public async Task<List<ProductReadDto>> GetAllAsync()
+        public async Task<List<ProductReadDto>> GetAllAsync(PaginationOptions options)
         {
-            var productList = await _productRepo.GetAllAsync();
+            var productList = await _productRepo.GetAllAsync(options);
             return _mapper.Map<List<Product>, List<ProductReadDto>>(productList);
+        }
+
+        public async Task<int> CountProductsAsync()
+        {
+            return await _productRepo.CountAsync();
         }
 
         public async Task<ProductReadDto> GetByIdAsync(Guid id)

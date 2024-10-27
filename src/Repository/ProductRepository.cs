@@ -7,6 +7,7 @@ using user.src.Database;
 using user.src.DTO;
 using user.src.Entity;
 using static user.src.DTO.CategoryDTO;
+using user.src.Utils;
 
 namespace user.src.Repository
 {
@@ -28,19 +29,6 @@ namespace user.src.Repository
             await _databaseContext.SaveChangesAsync();
             return newProduct;
         }
-
-        // public async Task<Product> CreateOneAsync(Product newProduct, Guid categoryId)
-        // {
-        //     // Set the CategoryId (or fetch and set the Category entity as in option 1)
-        //     newProduct.CategoryId = categoryId;
-
-        //     // Add the product to the database
-        //     await _product.AddAsync(newProduct);
-        //     await _databaseContext.SaveChangesAsync();
-
-        //     // Optionally, fetch the product again to include the category
-        //     return await GetByIdAsync(newProduct.Id);
-        // }
 
         // Get a product by Id
         public async Task<Product?> GetByIdAsync(Guid id)
@@ -67,13 +55,52 @@ namespace user.src.Repository
         }
 
         // Get all products (optional: add pagination)
-        public async Task<List<Product>> GetAllAsync()
+        public async Task<List<Product>> GetAllAsync(PaginationOptions options)
         {
-            return await _product.ToListAsync();
+            // return await _product.ToListAsync();
             // return await _product.Include(p => p.Category).ToListAsync();
             // return await _product.Skip((pageNumber - 1) * pageSize)
             //                      .Take(pageSize)
             //                      .ToListAsync();
+
+            // Start with all products
+            // var products = _product.Include(p => p.Category).ToList();
+            var products = _product.ToList();
+
+            if (!string.IsNullOrEmpty(options.Search))
+            {
+                products = products
+                    .Where(p => p.Name.Contains(options.Search, StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+            }
+
+            if (options.MinPrice.HasValue && options.MinPrice > 0 )
+            {
+                products = products
+                    .Where(p => p.Price >= options.MinPrice)
+                    .ToList();
+            }
+
+            if (options.MinPrice.HasValue && options.MaxPrice < decimal.MaxValue)
+            {
+                products = products
+                    .Where(p => p.Price <= options.MaxPrice)
+                    .ToList();
+            }
+
+            // Apply pagination in-memory
+            products = products
+                .Skip(options.Offset)
+                .Take(options.Limit)
+                .ToList();
+
+            return products;
+        }
+
+        // Count all products
+        public async Task<int> CountAsync()
+        {
+            return await _databaseContext.Set<Product>().CountAsync();
         }
 
         // Partial update (PATCH)

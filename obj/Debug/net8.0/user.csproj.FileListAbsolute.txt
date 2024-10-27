@@ -41,7 +41,6 @@
 /Users/andrea/teaching/sda-be/demo-home/week4/user/bin/Debug/net8.0/Microsoft.EntityFrameworkCore.Relational.dll
 /Users/andrea/teaching/sda-be/demo-home/week4/user/bin/Debug/net8.0/Npgsql.dll
 /Users/andrea/teaching/sda-be/demo-home/week4/user/bin/Debug/net8.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll
-/Users/andrea/teaching/sda-be/demo-home/week5/user/bin/Debug/net8.0/appsettings.Development.json
 /Users/andrea/teaching/sda-be/demo-home/week5/user/bin/Debug/net8.0/appsettings.json
 /Users/andrea/teaching/sda-be/demo-home/week5/user/bin/Debug/net8.0/user
 /Users/andrea/teaching/sda-be/demo-home/week5/user/bin/Debug/net8.0/user.deps.json

@@ -15,6 +15,7 @@ using user.src.Entity;
 using user.src.Services.orderDetail;
 using user.src.Services.order;
 using System.Text.Json.Serialization;
+using System.Net;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -52,6 +53,21 @@ builder.Services
 
     .AddScoped<IOrderService, OrderService>()
     .AddScoped<OrderRepository, OrderRepository>();
+
+// cors
+var MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+                      policy =>
+                      {
+                          policy.WithOrigins("http://localhost:3000")
+                          .AllowAnyHeader()
+                            .AllowAnyMethod()
+                            .SetIsOriginAllowed((host) => true)
+                            .AllowCredentials();
+                      });
+});
 
 // Add JWT Authentication
 // by default cookie
@@ -98,6 +114,7 @@ var app = builder.Build();
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
+    dbContext.Database.OpenConnection();
 
     try
     {
@@ -105,10 +122,6 @@ using (var scope = app.Services.CreateScope())
         if (dbContext.Database.CanConnect())
         {
             Console.WriteLine("Database is connected");
-        }
-        else
-        {
-            Console.WriteLine("Unable to connect to the database.");
         }
     }
     catch (Exception ex)
@@ -118,10 +131,11 @@ using (var scope = app.Services.CreateScope())
 }
 
 
-
 app.UseMiddleware<LoggingMiddleware>();
 app.UseMiddleware<ErrorHandler>();
 
+// cors
+app.UseCors(MyAllowSpecificOrigins);
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
@@ -132,5 +146,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Add a default route that returns a string
+app.MapGet("/", () => "Hello, World!");
+
 app.Run();
 

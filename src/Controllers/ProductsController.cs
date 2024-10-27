@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using user.src.Services.product;
 using static user.src.DTO.ProductDTO;
 
+using user.src.Utils;
+
 namespace user.src.Controllers
 {
     [ApiController]
@@ -27,11 +29,19 @@ namespace user.src.Controllers
 
 
         [HttpGet]
-
-        public async Task<ActionResult<List<ProductReadDto>>> GetAllAsync()
+        public async Task<ActionResult<List<ProductListDto>>> GetAllAsync([FromQuery] PaginationOptions options)
         {
-            var productList = await _productService.GetAllAsync();
-            return Ok(productList);
+            var productList = await _productService.GetAllAsync(options);
+            // calculate the total count 
+            var totalCount = await _productService.CountProductsAsync();
+
+            var response = new ProductListDto
+            {
+                Products = productList,
+                TotalCount = totalCount
+            };
+
+            return Ok(response);
         }
 
         [HttpGet("{id:guid}")]

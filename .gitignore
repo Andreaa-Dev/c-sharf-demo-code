@@ -1,4 +1,6 @@
-bin
-obj
-.vscode
+bin/
+obj/
+.vscode/
 appsettings.json
+Migrations/
+
