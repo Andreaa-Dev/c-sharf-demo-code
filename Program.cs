@@ -69,6 +69,8 @@ builder.Services.AddCors(options =>
                       });
 });
 
+// later when you deployed FE => add in line 64
+
 // Add JWT Authentication
 // by default cookie
 builder.Services
@@ -90,7 +92,6 @@ builder.Services
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
     };
 });
-
 // Add Authorization - later 
 builder.Services.AddAuthorization(
     options =>
@@ -98,7 +99,6 @@ builder.Services.AddAuthorization(
         options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
     }
     );
-
 // add controllers
 builder.Services.AddControllers();
 

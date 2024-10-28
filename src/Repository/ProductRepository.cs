@@ -54,19 +54,13 @@ namespace user.src.Repository
             return true;
         }
 
-        // Get all products (optional: add pagination)
+        // Get all products with  pagination
         public async Task<List<Product>> GetAllAsync(PaginationOptions options)
         {
-            // return await _product.ToListAsync();
-            // return await _product.Include(p => p.Category).ToListAsync();
-            // return await _product.Skip((pageNumber - 1) * pageSize)
-            //                      .Take(pageSize)
-            //                      .ToListAsync();
-
             // Start with all products
             // var products = _product.Include(p => p.Category).ToList();
             var products = _product.ToList();
-
+            // search
             if (!string.IsNullOrEmpty(options.Search))
             {
                 products = products
@@ -74,13 +68,14 @@ namespace user.src.Repository
                     .ToList();
             }
 
+            // min price
             if (options.MinPrice.HasValue && options.MinPrice > 0 )
             {
                 products = products
                     .Where(p => p.Price >= options.MinPrice)
                     .ToList();
             }
-
+            // max price
             if (options.MinPrice.HasValue && options.MaxPrice < decimal.MaxValue)
             {
                 products = products
@@ -88,7 +83,7 @@ namespace user.src.Repository
                     .ToList();
             }
 
-            // Apply pagination in-memory
+            // Apply pagination 
             products = products
                 .Skip(options.Offset)
                 .Take(options.Limit)

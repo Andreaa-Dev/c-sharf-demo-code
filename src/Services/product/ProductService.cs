@@ -42,11 +42,15 @@ namespace user.src.Services.product
         public async Task<List<ProductReadDto>> GetAllAsync(PaginationOptions options)
         {
             var productList = await _productRepo.GetAllAsync(options);
+            // productList.length ???
+            // 10
             return _mapper.Map<List<Product>, List<ProductReadDto>>(productList);
         }
 
+        // new => total amount of products
         public async Task<int> CountProductsAsync()
         {
+            // return 100
             return await _productRepo.CountAsync();
         }
 

@@ -29,6 +29,7 @@ namespace user.src.Controllers
 
 
         [HttpGet]
+        // old"Task<ActionResult<List<ProductReadDto>>>
         public async Task<ActionResult<List<ProductListDto>>> GetAllAsync([FromQuery] PaginationOptions options)
         {
             var productList = await _productService.GetAllAsync(options);

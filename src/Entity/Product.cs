@@ -16,7 +16,6 @@ namespace user.src.Entity
         public required string  ImageUrl { get; set; }
         public required string Description  { get; set; }
         public Guid CategoryId { get; set; }
-
         public required Category Category { get; set; }
     }
 }
