@@ -21,6 +21,13 @@ using System.Net;
 var builder = WebApplication.CreateBuilder(args);
 
 
+// Add services to the container.
+builder.Services.AddControllersWithViews();
+
+// Register DbContext with a scoped lifetime
+// builder.Services.AddDbContext<YourDbContext>(options =>
+//     options.UseNpgsql(builder.Configuration.GetConnectionString("Local")));
+
 // add database service
 var dataSourceBuilder = new NpgsqlDataSourceBuilder(builder.Configuration.GetConnectionString("Local"));
 dataSourceBuilder.MapEnum<Role>();
@@ -61,7 +68,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy(name: MyAllowSpecificOrigins,
                       policy =>
                       {
-                          policy.WithOrigins("http://localhost:3000")
+                          policy.WithOrigins("http://localhost:3000", "http://localhost:3001")
                           .AllowAnyHeader()
                             .AllowAnyMethod()
                             .SetIsOriginAllowed((host) => true)

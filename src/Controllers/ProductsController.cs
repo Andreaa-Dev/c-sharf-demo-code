@@ -46,7 +46,6 @@ namespace user.src.Controllers
         }
 
         [HttpGet("{id:guid}")]
-
         public async Task<ActionResult<ProductReadDto>> GetByIdAsync([FromRoute] Guid id)
         {
             var product = await _productService.GetByIdAsync(id);

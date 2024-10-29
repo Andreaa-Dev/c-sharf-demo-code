@@ -31,7 +31,11 @@ namespace user.src.Database
         {
             // enum => save as number 
             modelBuilder.HasPostgresEnum<Role>();
-            modelBuilder.Entity<Category>().Navigation(s => s.Products).AutoInclude();
+            // modelBuilder.Entity<Category>().Navigation(s => s.Products).AutoInclude();
+            // Add unique constraint to User.Email
+            modelBuilder.Entity<User>()
+                .HasIndex(u => u.Email)
+                .IsUnique();
         }
     }
 
