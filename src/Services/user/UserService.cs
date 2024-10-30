@@ -31,6 +31,7 @@ namespace user.src.Services.user
         // register
         public async Task<UserReadDto> CreateOneAsync(UserCreateDto createDto)
         {
+            // throw 405("the email is not right format")
             var isExisted = await _userRepo.EmailExistsAsync(createDto.Email);
             // check if user already exist also password
             if (isExisted)

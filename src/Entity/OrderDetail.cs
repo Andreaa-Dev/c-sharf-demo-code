@@ -11,8 +11,6 @@ namespace user.src.Entity
         public Guid ProductId { get; set; }
         public Guid OrderId { get; set; }
         public int Quantity { get; set; }
-        // to get product detail
-        // if not then it will be null
         public Product Product { get; set; }
 
     }

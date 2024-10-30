@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using user.src.Utils;
 
 namespace user.src.DTO
 {
@@ -17,10 +19,15 @@ namespace user.src.DTO
 
         public class UserCreateDto
         {
+
+            [Required]
+            [EmailAddress]
             public string Email { get; set; }
+
+            [Required]
+            [PasswordComplexityAttribute]
             public string Password { get; set; }
 
-            // default role as customer
         }
 
 

@@ -118,6 +118,9 @@ namespace user.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("FirstName")
+                        .HasColumnType("text");
+
                     b.Property<string>("Password")
                         .IsRequired()
                         .HasColumnType("text");
@@ -129,6 +132,9 @@ namespace user.Migrations
                         .HasColumnType("bytea");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.ToTable("User");
                 });
