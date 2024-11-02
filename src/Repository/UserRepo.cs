@@ -54,11 +54,11 @@ namespace user.src.Repository
             return await _user.FindAsync(id);
         }
 
-        public async Task<bool> UpdateOneAsync(User updateObject)
+        public async Task<User> UpdateOneAsync(User updateObject)
         {
             _user.Update(updateObject);
             await _databaseContext.SaveChangesAsync();
-            return true;
+            return updateObject;
         }
 
         public async Task<User?> FindByEmailAsync(string email)

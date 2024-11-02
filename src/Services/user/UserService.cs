@@ -53,7 +53,7 @@ namespace user.src.Services.user
             var foundByEmail = await _userRepo.FindByEmailAsync(userSignIn.Email);
             if (foundByEmail is null)
             {
-                throw CustomException.UnAuthorized();
+                throw CustomException.UnAuthorized("Do not have this email");
             }
             var passwordMatched = PasswordUtils.VerifyPassword(userSignIn.Password, foundByEmail.Password, foundByEmail.Salt);
             if (passwordMatched)
@@ -61,8 +61,8 @@ namespace user.src.Services.user
                 var tokenUtils = new TokenUtils(_config);
                 return tokenUtils.GenerateToken(foundByEmail);
             }
-            // return "fa";
-            throw CustomException.UnAuthorized();
+          
+            throw CustomException.UnAuthorized("Password does not match");
         }
 
         public async Task<bool> DeleteOneASync(Guid id)
@@ -84,32 +84,34 @@ namespace user.src.Services.user
         public async Task<UserReadDto> GetByIdAsync(Guid id)
         {
             var foundUser = await _userRepo.GetByIdAsync(id);
-            // if (foundUser == null)
-            // {
-            //     throw CustomException.NotFound($"User with {id} is not found");
-            // }
+            if (foundUser == null)
+            {
+                throw CustomException.NotFound($"User with {id} is not found");
+            }
             return _mapper.Map<User, UserReadDto>(foundUser);
         }
 
-        public async Task<bool> UpdateOneAsync(Guid id, UserUpdateDto updateDto)
+        public async Task<UserReadDto> UpdateOneAsync(Guid id, UserUpdateDto updateDto)
         {
             var foundUser = await _userRepo.GetByIdAsync(id);
             if (foundUser == null)
             {
-                return false;
+                throw CustomException.NotFound($"User with {id} is not found");
             }
             _mapper.Map(updateDto, foundUser);
-            return await _userRepo.UpdateOneAsync(foundUser);
+
+            var updatedUser = await _userRepo.UpdateOneAsync(foundUser);
+            return _mapper.Map<User, UserReadDto>(updatedUser);
 
         }
 
         public async Task<UserReadDto> FindByEmailAsync(string email)
         {
             var foundUser = await _userRepo.FindByEmailAsync(email);
-            // if (foundUser == null)
-            // {
-            //     throw CustomException.NotFound($"User with {email} is not found");
-            // }
+            if (foundUser == null)
+            {
+                throw CustomException.NotFound($"User with {email} is not found");
+            }
             return _mapper.Map<User, UserReadDto>(foundUser);
 
         }
@@ -137,7 +139,9 @@ namespace user.src.Services.user
             }
             // foundUser.Role = Role.Admin;
 
-            return await _userRepo.UpdateOneAsync(foundUser);
+
+           await _userRepo.UpdateOneAsync(foundUser);
+           return true;
 
         }
 
