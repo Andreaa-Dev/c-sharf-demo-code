@@ -53,7 +53,7 @@ namespace user.src.Services.user
             var foundByEmail = await _userRepo.FindByEmailAsync(userSignIn.Email);
             if (foundByEmail is null)
             {
-                throw CustomException.UnAuthorized("Do not have this email");
+                throw CustomException.UnAuthorized("Dont have an account, please register");
             }
             var passwordMatched = PasswordUtils.VerifyPassword(userSignIn.Password, foundByEmail.Password, foundByEmail.Salt);
             if (passwordMatched)

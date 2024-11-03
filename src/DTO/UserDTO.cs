@@ -41,7 +41,6 @@ namespace user.src.DTO
             public string? Password { get; set; }
             public string? FirstName { get; set; }
 
-
         }
         public class UserSignInDto
         {

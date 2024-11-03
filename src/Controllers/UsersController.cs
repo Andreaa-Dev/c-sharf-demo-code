@@ -41,6 +41,7 @@ namespace user.src.Controllers
         }
 
         [HttpPatch("{id:guid}")]
+        [Authorize]
         public async Task<ActionResult<UserReadDto>> UpdateOneAsync([FromRoute] Guid id, UserUpdateDto updateDto)
         {
             var userUpdated = await _userService.UpdateOneAsync(id, updateDto);

@@ -26,7 +26,6 @@ namespace user.src.Controllers
         [Authorize]
         public async Task<ActionResult<OrderReadDto>> CreateOneAsync([FromBody] OrderCreateDto orderCreateDto)
         {
-
             // exact user information
             var authenticatedClaims = HttpContext.User;
             // claim has userId
