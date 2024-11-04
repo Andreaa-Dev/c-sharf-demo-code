@@ -26,7 +26,6 @@ namespace user.src.Repository
             return createObject;
         }
 
-        // get product information
         public async Task<List<OrderDetail>> GetAllAsync()
         {
             return await _orderDetail.AsNoTracking()

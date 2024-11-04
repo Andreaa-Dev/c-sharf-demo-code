@@ -45,11 +45,8 @@ builder.Services.AddDbContext<DatabaseContext>(options =>
 });
 
 
-
-// add auto-mapper service
 builder.Services.AddAutoMapper(typeof(MapperProfile).Assembly);
 
-// add DI services
 builder.Services
     .AddScoped<ICategoryService, CategoryServices>()
     .AddScoped<CategoryRepo, CategoryRepo>()
@@ -82,10 +79,9 @@ builder.Services.AddCors(options =>
                       });
 });
 
-// later when you deployed FE => add in line 64
+// later when you deployed FE => add in line 77
 
-// Add JWT Authentication
-// by default cookie
+// Add JWT Authentication, by default cookie
 builder.Services
 .AddAuthentication(options =>
 {
@@ -105,25 +101,21 @@ builder.Services
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
     };
 });
-// Add Authorization - later 
+
 builder.Services.AddAuthorization(
     options =>
     {
         options.AddPolicy("AdminOnly", policy => policy.RequireRole("Admin"));
     }
     );
-// add controllers
 builder.Services.AddControllers();
 
-// swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// after database
 var app = builder.Build();
 
-// Test database connection
-// after app
+
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<DatabaseContext>();
@@ -146,8 +138,6 @@ using (var scope = app.Services.CreateScope())
 
 app.UseMiddleware<LoggingMiddleware>();
 app.UseMiddleware<ErrorHandler>();
-
-// cors
 app.UseCors(MyAllowSpecificOrigins);
 app.UseAuthentication();
 app.UseAuthorization();
@@ -160,7 +150,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-// Add a default route that returns a string
 app.MapGet("/", () => "Hello, World!");
 
 app.Run();

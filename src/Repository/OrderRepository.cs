@@ -22,28 +22,26 @@ namespace user.src.Repository
             _products = _databaseContext.Set<Product>();
         }
 
-        public async Task<Order> CreateOneAsync(Order createObject)
+        public async Task<Order?> CreateOneAsync(Order createObject)
         {
             await _orders.AddAsync(createObject);
             await _databaseContext.SaveChangesAsync();
 
-            // order detail is array/collection
-            await _orders.Entry(createObject).Collection(o => o.OrderDetails).LoadAsync();
-            // Optionally, load related Products for each OrderDetail
-            foreach (var detail in createObject.OrderDetails)
-            {
-                await _databaseContext.Entry(detail).Reference(od => od.Product).LoadAsync();
-            }
+            // await _orders.Entry(createObject).Collection(o => o.OrderDetails).LoadAsync();
+            // foreach (var detail in createObject.OrderDetails)
+            // {
+            //     await _databaseContext.Entry(detail).Reference(od => od.Product).LoadAsync();
+            // }
 
-            return createObject;
+            // return createObject;
 
             // way2
-            //     var orderWithDetails = await _orders
-            // .Include(o => o.OrderDetails)
-            //     .ThenInclude(od => od.Product)
-            // .FirstOrDefaultAsync(o => o.Id == createObject.Id);
+            var orderWithDetails = await _orders
+                    .Include(o => o.OrderDetails)
+                    .ThenInclude(od => od.Product)
+                    .FirstOrDefaultAsync(o => o.Id == createObject.Id);
 
-            //     return orderWithDetails;
+            return orderWithDetails;
 
 
         }
@@ -51,11 +49,10 @@ namespace user.src.Repository
 
         public async Task<List<Order>> GetOrdersByUserIdAsync(Guid userId)
         {
-            // add include 2 times
             return await _databaseContext.Order
             .Include(o => o.OrderDetails)
             .ThenInclude(od => od.Product)
-            .Where(o => o.UserId == userId)  // Assuming there's a UserId property in Order
+            .Where(o => o.UserId == userId)
             .ToListAsync();
         }
     }

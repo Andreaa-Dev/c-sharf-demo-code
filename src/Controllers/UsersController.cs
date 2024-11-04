@@ -25,8 +25,7 @@ namespace user.src.Controllers
         }
 
         [HttpGet]
-        // [Authorize(Roles = "Admin")]
-
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<IEnumerable<UserReadDto>>> GetAllAsync([FromQuery] PaginationOptions getAllOptions)
         {
             var UserList = await _userService.GetAllAsync(getAllOptions);
@@ -48,7 +47,6 @@ namespace user.src.Controllers
             return Ok(userUpdated);
         }
 
-        // id:guid => type of guid
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult<bool>> DeleteOneAsync([FromRoute] Guid id)
         {
@@ -58,7 +56,6 @@ namespace user.src.Controllers
         }
 
 
-        // register
         [HttpPost("register")]
         public async Task<ActionResult<UserReadDto>> RegisterUser([FromBody] UserCreateDto userCreateDto)
         {
@@ -67,7 +64,6 @@ namespace user.src.Controllers
         }
 
 
-        // login
         [HttpPost("signIn")]
         public async Task<ActionResult<string>> SignInUser([FromBody] UserSignInDto userSignInDto)
         {
@@ -76,7 +72,6 @@ namespace user.src.Controllers
             return Ok(token);
         }
 
-        // admin
         [HttpPost("create-admin")]
         public async Task<ActionResult<UserReadDto>> CreateAdminAsync([FromBody] UserCreateDto userCreateDto)
         {
@@ -88,17 +83,14 @@ namespace user.src.Controllers
         [Authorize]
         public async Task<ActionResult<UserReadDto>> CheckAuthAsync()
         {
-            // exact user information
             var authenticatedClaims = HttpContext.User;
-            // claim has userId
             var userId = authenticatedClaims.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
             var userGuid = new Guid(userId);
             var user = await _userService.GetByIdAsync(userGuid);
             return Ok(user);
         }
 
-        // make someone admin
-        // [Authorize]
+        [Authorize]
         [HttpPatch("make-admin/{id:guid}")]
         public async Task<ActionResult<UserReadDto>> UpdateAdminAsync([FromRoute] Guid id)
         {

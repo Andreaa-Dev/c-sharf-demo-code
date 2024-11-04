@@ -22,7 +22,6 @@ namespace user.src.Repository
             _product = databaseContext.Set<Product>();
         }
 
-        // Create a new product
         public async Task<Product> CreateOneAsync(Product newProduct)
         {
             await _product.AddAsync(newProduct);
@@ -30,7 +29,6 @@ namespace user.src.Repository
             return newProduct;
         }
 
-        // Get a product by Id
         public async Task<Product?> GetByIdAsync(Guid id)
         {
             return await _product.Include(p => p.Category).FirstOrDefaultAsync(p => p.Id == id);
@@ -38,7 +36,6 @@ namespace user.src.Repository
 
         }
 
-        // Delete a product
         public async Task<bool> DeleteOneAsync(Product product)
         {
             _product.Remove(product);
@@ -46,7 +43,6 @@ namespace user.src.Repository
             return true;
         }
 
-        // Update a product
         public async Task<bool> UpdateOneAsync(Product updateProduct)
         {
             _product.Update(updateProduct);
@@ -54,7 +50,6 @@ namespace user.src.Repository
             return true;
         }
 
-        // Get all products with  pagination
         public async Task<List<Product>> GetAllAsync(PaginationOptions options)
         {
             // Start with all products
@@ -69,7 +64,7 @@ namespace user.src.Repository
             }
 
             // min price
-            if (options.MinPrice.HasValue && options.MinPrice > 0 )
+            if (options.MinPrice.HasValue && options.MinPrice > 0)
             {
                 products = products
                     .Where(p => p.Price >= options.MinPrice)
@@ -98,7 +93,6 @@ namespace user.src.Repository
             return await _databaseContext.Set<Product>().CountAsync();
         }
 
-        // Partial update (PATCH)
         public async Task<Product?> PatchOneAsync(Guid id, Product updatedFields)
         {
             var existingProduct = await GetByIdAsync(id);

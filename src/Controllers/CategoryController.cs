@@ -22,7 +22,6 @@ namespace user.src.Controllers
         }
 
 
-        // create
         [HttpPost]
         public async Task<ActionResult<CategoryReadDto>> CreateOneController([FromBody] CategoryCreateDto createDto)
         {
@@ -30,9 +29,6 @@ namespace user.src.Controllers
             return Ok(categoryCreated);
         }
 
-        // get all 
-        // [Authorize]
-        // using Microsoft.AspNetCore.Authorization;
 
         [HttpGet]
         public async Task<ActionResult<List<CategoryReadDto>>> GetAllAsync()
@@ -41,7 +37,6 @@ namespace user.src.Controllers
             return Ok(categoryList);
         }
 
-        // id
         [HttpGet("{id:guid}")]
         public async Task<ActionResult<CategoryReadDtoPro>> GetByIdAsync([FromRoute] Guid id)
         {
@@ -49,7 +44,6 @@ namespace user.src.Controllers
             return Ok(category);
         }
 
-        // id:guid => type of guid
         [HttpDelete("{id:guid}")]
         public async Task<ActionResult<bool>> DeleteOneAsync([FromRoute] Guid id)
         {
@@ -57,7 +51,6 @@ namespace user.src.Controllers
             return Ok(isDeleted);
         }
 
-        // put
         [HttpPut]
         public async Task<ActionResult<CategoryReadDto>> CreateOneAsync([FromRoute] Guid id, [FromBody] CategoryUpdateDto updateDto)
         {

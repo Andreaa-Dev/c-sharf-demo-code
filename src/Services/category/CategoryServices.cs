@@ -12,14 +12,12 @@ using user.src.Utils;
 
 namespace user.src.Services
 {
-    // implement interface
     public class CategoryServices : ICategoryService
     {
         protected readonly CategoryRepo _categoryRepo;
         protected readonly IMapper _mapper;
 
-        // constructor 
-        // DI
+
         public CategoryServices(CategoryRepo categoryRepo, IMapper mapper)
         {
             _categoryRepo = categoryRepo;

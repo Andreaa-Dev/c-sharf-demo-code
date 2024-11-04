@@ -8,8 +8,6 @@ namespace user.src.DTO
 {
     public class CategoryDTO
     {
-        // when create product, we only need to provide name
-        // id is provide by database
         public class CategoryCreateDto
         {
             public string Name { get; set; }

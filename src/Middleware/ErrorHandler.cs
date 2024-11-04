@@ -22,18 +22,11 @@ namespace user.src.Middleware
 
             try
             {
-                // in case no error => go next logic
                 await _next(context);
             }
             catch (CustomException ex)
             {
                 Console.WriteLine($"Error");
-
-                // Log the exception
-                // optional 
-                // _logger.LogError(ex, "An unhandled exception has occurred.");
-
-                // Handle the exception and return a response
                 context.Response.StatusCode = ex.StatusCode;
                 context.Response.ContentType = "application/json";
 
@@ -42,7 +35,6 @@ namespace user.src.Middleware
                     ex.StatusCode,
                     ex.Message,
                 };
-
                 await context.Response.WriteAsJsonAsync(response);
             }
         }

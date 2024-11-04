@@ -21,7 +21,9 @@ namespace user.src.Controllers
         {
             _productService = service;
         }
+
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<ProductReadDto>> CreateOneAsync([FromBody] ProductCreateDto createDto)
         {
             var productCreated = await _productService.CreateOneAsync(createDto);
@@ -30,11 +32,9 @@ namespace user.src.Controllers
 
 
         [HttpGet]
-        // old"Task<ActionResult<List<ProductReadDto>>>
         public async Task<ActionResult<List<ProductListDto>>> GetAllAsync([FromQuery] PaginationOptions options)
         {
             var productList = await _productService.GetAllAsync(options);
-            // calculate the total count 
             var totalCount = await _productService.CountProductsAsync();
 
             var response = new ProductListDto
@@ -69,7 +69,6 @@ namespace user.src.Controllers
             {
                 return NoContent();
             }
-
             return NotFound();
         }
     }

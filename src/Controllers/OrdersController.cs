@@ -26,16 +26,12 @@ namespace user.src.Controllers
         [Authorize]
         public async Task<ActionResult<OrderReadDto>> CreateOneAsync([FromBody] OrderCreateDto orderCreateDto)
         {
-            // exact user information
             var authenticatedClaims = HttpContext.User;
-            // claim has userId
             var userId = authenticatedClaims.FindFirst(c => c.Type == ClaimTypes.NameIdentifier)!.Value;
             var userGuid = new Guid(userId);
             return await _orderService.CreateOneAsync(userGuid, orderCreateDto);
         }
 
-        // get order by userId
-        // New route to get orders by userId
         [HttpGet("user/{userId}")]
         [Authorize]
         public async Task<ActionResult<IEnumerable<OrderReadDto>>> GetOrdersByUserIdAsync(Guid userId)
