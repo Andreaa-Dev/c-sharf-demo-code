@@ -34,6 +34,12 @@ dataSourceBuilder.MapEnum<Role>();
 
 var dataSource = dataSourceBuilder.Build();
 builder.Services.AddSingleton(dataSource);
+
+// services.AddDbContext<DatabaseContext>(options =>
+// {
+//     options.UseNpgsql(_config.GetConnectionString("Local"));
+// });
+
 // builder.Services.AddDbContext<DatabaseContext>(options =>
 // {
 //     options.UseNpgsql(dataSourceBuilder.Build());
