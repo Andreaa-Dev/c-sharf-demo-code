@@ -7,6 +7,7 @@ using user.src.Services.product;
 using static user.src.DTO.ProductDTO;
 
 using user.src.Utils;
+using Microsoft.AspNetCore.Authorization;
 
 namespace user.src.Controllers
 {
@@ -60,11 +61,16 @@ namespace user.src.Controllers
         }
 
         [HttpDelete("{id:guid}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<bool>> DeleteOneAsync([FromRoute] Guid id)
         {
             var isDeleted = await _productService.DeleteOneASync(id);
-            System.Console.WriteLine(isDeleted);
-            return Ok(isDeleted);
+            if (isDeleted)
+            {
+                return NoContent();
+            }
+
+            return NotFound();
         }
     }
 }

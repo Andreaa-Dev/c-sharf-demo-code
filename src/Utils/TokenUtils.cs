@@ -24,7 +24,7 @@ namespace user.src.Utils
             // claim collection expression
             var claims = new List<Claim>{
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-                //new Claim(ClaimTypes.Role, user.Role.ToString()),
+                new Claim(ClaimTypes.Role, user.Role.ToString()),
                 new Claim(ClaimTypes.Email, user.Email)
             };
             var audience = _config.GetSection("Jwt:Audience").Value;

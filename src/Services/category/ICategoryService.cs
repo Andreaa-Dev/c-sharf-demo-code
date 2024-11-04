@@ -9,18 +9,13 @@ namespace user.src.Services
 {
     public interface ICategoryService
     {
-        // define the method
-        // create
+       
         Task<CategoryReadDto> CreateOneAsync(CategoryCreateDto createDto);
 
-        // get all
-        Task<List<CategoryReadDto>> GetAllAsync(PaginationOptions paginationOptions);
-        //Task<IEnumerable<CategoryReadDto>> GetAllAsync(GetAllOptions getAllOptions);
+        Task<List<CategoryReadDto>> GetAllAsync();
 
-        // get id
         Task<CategoryReadDtoPro> GetByIdAsync(Guid id);
 
-        // delete
         Task<bool> DeleteOneASync(Guid id);
 
         // update

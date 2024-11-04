@@ -35,9 +35,9 @@ namespace user.src.Controllers
         // using Microsoft.AspNetCore.Authorization;
 
         [HttpGet]
-        public async Task<ActionResult<List<CategoryReadDto>>> GetAllAsync([FromQuery] PaginationOptions paginationOptions)
+        public async Task<ActionResult<List<CategoryReadDto>>> GetAllAsync()
         {
-            var categoryList = await _categoryService.GetAllAsync(paginationOptions);
+            var categoryList = await _categoryService.GetAllAsync();
             return Ok(categoryList);
         }
 

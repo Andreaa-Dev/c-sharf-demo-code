@@ -40,9 +40,9 @@ namespace user.src.Services
 
 
         // get all
-        public async Task<List<CategoryReadDto>> GetAllAsync(PaginationOptions paginationOptions)
+        public async Task<List<CategoryReadDto>> GetAllAsync()
         {
-            var categoryList = await _categoryRepo.GetAllWithPaginationAsync(paginationOptions);
+            var categoryList = await _categoryRepo.GetAllWithPaginationAsync();
             return _mapper.Map<List<Category>, List<CategoryReadDto>>(categoryList);
         }
 

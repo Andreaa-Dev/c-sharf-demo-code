@@ -60,14 +60,15 @@ namespace user.src.Repository
         // }
 
 
-        public async Task<List<Category>> GetAllWithPaginationAsync(PaginationOptions paginationOptions)
+        public async Task<List<Category>> GetAllWithPaginationAsync()
         {
             // http://localhost:5000/api/v1/categorys?offset=0&limit=10&search=c
             // c.Name.Equals(searchTerm, StringComparison.OrdinalIgnoreCase)
             // Name.ToLower()
-            var result = _category.Where(c => c.Name.Contains(paginationOptions.Search));
-            return await result.Skip(paginationOptions.Offset).Take(paginationOptions.Limit).ToListAsync();
+            //var result = _category.Where(c => c.Name.Contains(paginationOptions.Search));
+            //return await result.Skip(paginationOptions.Offset).Take(paginationOptions.Limit).ToListAsync();
             //return await _category.Skip(paginationOptions.Offset).Take(paginationOptions.Limit).ToListAsync();
+            return await _category.ToListAsync();
         }
 
         public async Task<Category?> GetByIdAsync(Guid id)
