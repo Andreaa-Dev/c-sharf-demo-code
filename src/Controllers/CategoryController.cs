@@ -26,7 +26,8 @@ namespace user.src.Controllers
         public async Task<ActionResult<CategoryReadDto>> CreateOneController([FromBody] CategoryCreateDto createDto)
         {
             var categoryCreated = await _categoryService.CreateOneAsync(createDto);
-            return Ok(categoryCreated);
+            //return Ok(categoryCreated);
+            return Created($"api/v1/category/{categoryCreated.Id}", categoryCreated);
         }
 
 
@@ -56,7 +57,6 @@ namespace user.src.Controllers
         {
             var categoryUpdated = await _categoryService.UpdateOneAsync(id, updateDto);
             return Ok(categoryUpdated);
-            // return Created($"api/categories/{categoryUpdated.Id}", categoryUpdated);
 
         }
     }

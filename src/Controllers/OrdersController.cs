@@ -32,9 +32,9 @@ namespace user.src.Controllers
             return await _orderService.CreateOneAsync(userGuid, orderCreateDto);
         }
 
-        [HttpGet("user/{userId}")]
+        [HttpGet("users/{userId}")]
         [Authorize]
-        public async Task<ActionResult<IEnumerable<OrderReadDto>>> GetOrdersByUserIdAsync(Guid userId)
+        public async Task<ActionResult<IEnumerable<OrderReadDto>>> GetOrdersByUserIdAsync([FromRoute] Guid userId)
         {
             var orders = await _orderService.GetOrdersByUserIdAsync(userId);
 
