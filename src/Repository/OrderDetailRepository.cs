@@ -28,8 +28,8 @@ namespace user.src.Repository
 
         public async Task<List<OrderDetail>> GetAllAsync()
         {
-            return await _orderDetail.AsNoTracking()
-            //.Include(o => o.Product).ThenInclude(p => p.Category)
+            return await _orderDetail
+            .Include(o => o.Product).ThenInclude(p => p.Category)
             .ToListAsync();
         }
     }

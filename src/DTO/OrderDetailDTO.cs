@@ -13,6 +13,9 @@ namespace user.src.DTO
         {
             public int Quantity { get; set; }
             public Guid ProductId { get; set; }
+            // public ProductReadDto Product { get; set; }
+
+
         }
         public class OrderDetailReadDto
         {

@@ -33,6 +33,8 @@ namespace user.src.DTO
             public required string Description { get; set; }
             public Guid CategoryId { get; set; }
 
+            // public required decimal StockQuantity { get; set; }
+
         }
         public class ProductUpdateDto
         {
