@@ -42,10 +42,9 @@ namespace user.src.Repository
             return true;
         }
 
-
-        public async Task<IEnumerable<User>> GetAllAsync(PaginationOptions getAllOptions)
+        public async Task<IEnumerable<User>> GetAllAsync()
         {
-            return await _user.Skip(getAllOptions.Offset).Take(getAllOptions.Limit).ToArrayAsync();
+            return await _user.ToListAsync();
         }
 
 

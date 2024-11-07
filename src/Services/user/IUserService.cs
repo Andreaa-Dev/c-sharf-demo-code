@@ -15,7 +15,7 @@ namespace user.src.Services.user
         Task<UserReadDto> CreateAdminAsync(UserCreateDto createDto);
         Task<string> SignInAsync(UserSignInDto userSignInDto);
         Task<bool> DeleteOneASync(Guid id);
-        Task<IEnumerable<UserReadDto>> GetAllAsync(PaginationOptions getAllOptions);
+        Task<IEnumerable<UserReadDto>> GetAllAsync();
         Task<UserReadDto> GetByIdAsync(Guid id);
         Task<UserReadDto> UpdateOneAsync(Guid id, UserUpdateDto updateDto);
         Task<bool> UpdateAdminAsync(Guid id);

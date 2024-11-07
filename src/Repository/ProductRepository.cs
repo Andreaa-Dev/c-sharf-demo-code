@@ -58,7 +58,7 @@ namespace user.src.Repository
 
             // without category information
 
-            var products = _product.ToList();
+            var products = await _product.ToListAsync();
             // search
             if (!string.IsNullOrEmpty(options.Search))
             {

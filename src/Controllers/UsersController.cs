@@ -26,10 +26,10 @@ namespace user.src.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<IEnumerable<UserReadDto>>> GetAllAsync([FromQuery] PaginationOptions getAllOptions)
+        public async Task<ActionResult<IEnumerable<UserReadDto>>> GetAllAsync()
         {
-            var UserList = await _userService.GetAllAsync(getAllOptions);
-            return Ok(UserList);
+            var userList = await _userService.GetAllAsync();
+            return Ok(userList);
         }
 
         [HttpGet("{id:guid}")]
@@ -48,10 +48,10 @@ namespace user.src.Controllers
         }
 
         [HttpDelete("{id:guid}")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<bool>> DeleteOneAsync([FromRoute] Guid id)
         {
             var isDeleted = await _userService.DeleteOneASync(id);
-            System.Console.WriteLine(isDeleted);
             return Ok(isDeleted);
         }
 

@@ -61,7 +61,7 @@ namespace user.src.Services.user
                 var tokenUtils = new TokenUtils(_config);
                 return tokenUtils.GenerateToken(foundByEmail);
             }
-          
+
             throw CustomException.UnAuthorized("Password does not match");
         }
 
@@ -75,10 +75,10 @@ namespace user.src.Services.user
             return false;
         }
 
-        public async Task<IEnumerable<UserReadDto>> GetAllAsync(PaginationOptions getAllOptions)
+        public async Task<IEnumerable<UserReadDto>> GetAllAsync()
         {
-            var UserList = await _userRepo.GetAllAsync(getAllOptions);
-            return _mapper.Map<IEnumerable<User>, IEnumerable<UserReadDto>>(UserList);
+            var userList = await _userRepo.GetAllAsync();
+            return _mapper.Map<IEnumerable<User>, IEnumerable<UserReadDto>>(userList);
         }
 
         public async Task<UserReadDto> GetByIdAsync(Guid id)
@@ -140,8 +140,8 @@ namespace user.src.Services.user
             // foundUser.Role = Role.Admin;
 
 
-           await _userRepo.UpdateOneAsync(foundUser);
-           return true;
+            await _userRepo.UpdateOneAsync(foundUser);
+            return true;
 
         }
 
